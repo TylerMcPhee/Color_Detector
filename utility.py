@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-def get_limits(color):
+def get_HSV_limits(color):
     c = np.uint8([[color]])
     hsvC = cv2.cvtColor(c, cv2.COLOR_BGR2HSV)
 
@@ -14,7 +14,7 @@ def get_limits(color):
     return lowerlim, upperlim
    
 
-def in_range(src, lower, upper):
+def in_range_HSV(src, lower, upper):
     # Initialize mask with zeros (black)
     mask = np.zeros(src.shape[:2], dtype=np.uint8)
     
@@ -30,3 +30,16 @@ def in_range(src, lower, upper):
             if in_range:
                 mask[i, j] = 255  # White pixel
     return mask
+
+
+
+
+def get_RGB_limits(color, tolerance=100):
+    
+    color = np.array(color, dtype=np.uint8)
+    lower = np.array([max(0, c - tolerance) for c in color], dtype=np.uint8)
+    upper = np.array([min(255, c + tolerance) for c in color], dtype=np.uint8)
+    return lower, upper
+
+def in_range_rgb(image, lower, upper):
+    return cv2.inRange(image, lower, upper)
