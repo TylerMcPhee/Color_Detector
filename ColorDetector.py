@@ -85,6 +85,7 @@ while True:
 
     
     output = np.hstack([frame,image])
+    #output = np.hstack([HSV_yellow_booleanMask,BGR_yellow_booleanMask])
 
 
 
